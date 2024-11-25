@@ -13,9 +13,10 @@
             <div class="col-6">
                 <div class="row d-flex vh-100 justify-content-center align-items-center">
                     <div class="col-7">
-                        <form action="" method="POST">
-                            <h1 class="border-bottom pb-3 text-center">Register Akun</h1>
-
+                        <form action="{{ route('register.authentication') }}" method="POST">
+                            <h1 class="border-bottom pb-3 text-center">Registrasi Magang</h1>
+                            @csrf
+                            @include('component.alert')
                             <!-- Input Name -->
                             <div class="mb-3 mt-5">
                                 <label for="name" class="form-label">Name</label>

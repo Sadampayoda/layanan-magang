@@ -19,19 +19,22 @@ class CrudRepository implements CrudInterface
         }
         $this->model = new $model;
     }
-    public function all()
+    public function all(array $relational = [])
     {
-        return $this->model->all();
+        return ($relational) ? $this->model->with($relational)->get()
+        : $this->model->all();
     }
 
-    public function find(array $find)
+    public function find(array $find, array $relational = [])
     {
-        return $this->model->where($find);
+        return ($relational) ? $this->model->with($relational)->where($find)->get()
+        : $this->model->where($find)->get();
     }
 
-    public function findId($id)
+    public function findId($id, array $relational = [])
     {
-        return $this->model->find($id);
+        return ($relational) ? $this->model->with($relational)->find($id)
+        : $this->model->find($id);
     }
 
     public function create($data)
@@ -41,7 +44,7 @@ class CrudRepository implements CrudInterface
 
     public function update($data, $id)
     {
-        $this->model->update($data, $id);
+        $this->model->find($id)->update($data);
     }
 
     public function delete($id)

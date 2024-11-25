@@ -13,8 +13,10 @@
             <div class="col-6">
                 <div class="row d-flex vh-100 justify-content-center align-items-center">
                     <div class="col-8">
-                        <form action="" method="POST">
+                        <form action="{{ route('login.authentication') }}" method="POST">
                             <h1 class="border-bottom pb-3 text-center">Login Magang</h1>
+                            @csrf
+                            @include('component.alert')
 
                             <!-- Input Email -->
                             <div class="mb-3 mt-5">
@@ -35,7 +37,7 @@
                                 <button type="submit" class="btn btn-dark rounded-0">Login</button>
                             </div>
 
-                            <!-- Link ke Register -->
+
                             <p class="text-center mt-3 border-top p-3">
                                 Belum punya akun?
                                 <a href="{{ route('register') }}" class="text-decoration-none">Silahkan Register</a>
