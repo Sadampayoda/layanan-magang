@@ -1,9 +1,11 @@
 <?php
 
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MagangController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserMagangController;
 use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
@@ -24,9 +26,16 @@ Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/','index')->name('dashboard');
         Route::put('/magang/{id}/status','updateStatus')->name('magang.status');
+        Route::post('/logout','logout')->name('logout');
     });
     Route::resource('users',UserController::class)
     ->except(['create','show','edit']);
     Route::resource('magang',MagangController::class)
     ->except(['create','show','edit']);
+    Route::resource('kegiatan',UserMagangController::class)
+    ->except(['create','show','edit']);
+    Route::resource('biodata',BiodataController::class)
+    ->except(['create','show','edit']);
+
+
 });

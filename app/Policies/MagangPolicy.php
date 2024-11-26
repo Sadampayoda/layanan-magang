@@ -13,7 +13,7 @@ class MagangPolicy
      */
     public function viewAny(User $user)
     {
-        return $user->level == 'admin' || $user->level == 'opd'
+        return $user->level == 'admin' || $user->level == 'opd' || $user->level == 'mahasiswa'
             ? Response::allow()
             : abort(404);
     }

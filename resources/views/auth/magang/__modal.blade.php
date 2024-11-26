@@ -117,6 +117,48 @@
             </div>
         </div>
     </div>
+
+
+
+
+    <div class="modal fade" id="ProgramModal{{ $item->id }}" tabindex="-1"
+        aria-labelledby="ProgramModalLabel{{ $item->id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('magang.update', $item->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ProgramModalLabel{{ $item->id }}">Program {{$item->jenis_magang}}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="rentang_waktu_mulai" class="form-label">Tanggal Mulai</label>
+                            <input disabled type="date" name="rentang_waktu_mulai" class="form-control"
+                                value="{{ $item->rentang_waktu_mulai }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="rentang_waktu_selesai" class="form-label">Tanggal Selesai</label>
+                            <input disabled type="date" name="rentang_waktu_selesai" class="form-control"
+                                value="{{ $item->rentang_waktu_selesai }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Deskripsi</label>
+                            <textarea disabled class="form-control" name="description" id="description" cols="30" rows="10">{{ $item->description }}</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-0"
+                            data-bs-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-success rounded-0">Daftar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 @endforeach
 
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">

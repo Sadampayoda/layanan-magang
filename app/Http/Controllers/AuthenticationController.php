@@ -49,4 +49,6 @@ class AuthenticationController extends Controller
         $this->crud->create($account);
         return redirect()->route('login')->with('success', 'Akun berhasil dibuat');
     }
+
+
 }

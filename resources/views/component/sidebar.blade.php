@@ -50,15 +50,15 @@
             <li class="nav-small-cap">
                 <h3 class="text-muted fs-4">Layanan - Magang</h3>
             </li>
-            @if (auth()->user()->level == 'admin' || auth()->user()->level == 'opd')
-                <li class="sidebar-item">
-                    <a class="sidebar-link {{ $title == 'magang' ? 'active' : '' }} text-decoration-none"
-                        href="{{ route('magang.index') }}">
-                        <i class="bi bi-clipboard-check fs-4"></i>
-                        <h3 class="fs-4 mt-1">Pengajuan Magang</h3>
-                    </a>
-                </li>
-            @elseif (auth()->user()->level == 'admin')
+            <li class="sidebar-item">
+                <a class="sidebar-link {{ $title == 'magang' ? 'active' : '' }} text-decoration-none"
+                    href="{{ route('magang.index') }}">
+                    <i class="bi bi-clipboard-check fs-4"></i>
+                    <h3 class="fs-4 mt-1">{{(auth()->user()->level !== 'mahasiswa' ? 'Pengajuan Magang' : 'Program Magang')}} </h3>
+                </a>
+            </li>
+
+            @if (auth()->user()->level == 'admin')
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ $title == 'user' ? 'active' : '' }} text-decoration-none"
                         href="{{ route('users.index') }}">
@@ -83,6 +83,15 @@
                     </a>
                 </li>
             @endif
+            @if (auth()->user()->level == 'mahasiswa')
+                <li class="sidebar-item">
+                    <a class="sidebar-link {{ $title == 'form' ? 'active' : '' }} text-decoration-none"
+                        href="{{route('biodata.index')}}">
+                        <i class="bi bi-bell fs-4"></i>
+                        <h3 class="fs-4 mt-1">Form data</h3>
+                    </a>
+                </li>
+            @endif
 
         </ul>
 
@@ -102,12 +111,7 @@
                     <h3 class="fs-4 mt-1">Tentang Kami</h3>
                 </a>
             </li>
-            <li class="sidebar-item">
-                <a class="sidebar-link {{ $title == 'logout' ? 'active' : '' }} text-decoration-none" href="">
-                    <i class="bi bi-box-arrow-left fs-4"></i>
-                    <h3 class="fs-4 mt-1">Logout</h3>
-                </a>
-            </li>
+
         </ul>
 
     </nav>
