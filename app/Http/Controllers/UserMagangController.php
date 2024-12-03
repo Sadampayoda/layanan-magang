@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserMagangEvent;
+use App\Http\Requests\UserMagangCreateRequest;
+use App\Http\Requests\UserMagangUpdateRequest;
 use App\Models\Magang;
 use App\Models\UserMagang;
+use App\Repository\Interface\CrudInterface;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 
 class UserMagangController extends Controller
 {
+
+    protected $crud;
+    use AuthorizesRequests;
+    public function __construct(CrudInterface $crudInterface)
+    {
+        $this->crud = $crudInterface;
+        $this->crud->setModel(UserMagang::class);
+    }
 
     // public function
     /**
@@ -15,8 +28,17 @@ class UserMagangController extends Controller
      */
     public function index()
     {
+        $this->authorize('view',UserMagang::class);
+
+        $data = (auth()->user()->level == 'mahasiswa')
+        ?  $this->crud->find('user_id',auth()->user()->id,['user','magang'])
+        : Magang::all();
+
+
+
         return view('auth.kegiatan.index',[
-            'data' => Magang::all()
+            'title' => 'kegiatan',
+            'data' => $data,
         ]);
     }
 
@@ -31,33 +53,49 @@ class UserMagangController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UserMagangCreateRequest $userMagangCreateRequest)
     {
-        //
+        $this->authorize('create',UserMagang::class);
+        $this->crud->create($userMagangCreateRequest->only(
+            ['magang_id', 'user_id']
+        ));
+        return redirect()->route('kegiatan.index')->with('success', 'Anda telah berhasil mendaftarkan');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(UserMagang $userMagang)
+    public function show(int $id)
     {
-        //
+        return view('auth.kegiatan.show',[
+            'title' => 'kegiatan',
+            'data' => $this->crud->find('user_id',$id,['user.biodata'])[0],
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(UserMagang $userMagang)
+    public function edit(int $id)
     {
-        //
+        return view('auth.kegiatan.edit',[
+            'title' => 'kegiatan',
+            'data' => $this->crud->find('magang_id',$id,['magang','user']),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserMagang $userMagang)
+    public function update(UserMagangUpdateRequest $userMagangUpdateRequest, int $id)
     {
-        //
+        $data = $this->crud->findId($id);
+        // $this->authorize('updateStatus', $data);
+        $data->update([
+            'status' => $userMagangUpdateRequest->status
+        ]);
+        event(new UserMagangEvent($data));
+        return back()->with('success', 'Status verifikasi berhasil di ubah');
     }
 
     /**

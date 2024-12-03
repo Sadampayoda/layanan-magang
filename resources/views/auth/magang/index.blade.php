@@ -66,9 +66,7 @@
                                             Verifikasi
                                         </button>
                                     @elseif ($item->status_pengajuan == 'Approved')
-                                        <a class="btn btn-success btn-sm rounded-0" href="">
-                                            Lihat partisipasi
-                                        </a>
+                                        <span>Diterima</span>
                                     @else
                                         <span>Ditolak</span>
                                     @endif
@@ -81,6 +79,7 @@
             </div>
         </div>
     @else
+        {{-- @dd($magang) --}}
         <div class="body-wrapper">
             <div class="container mt-5 pt-5">
                 <h2 class="text-center mb-4">Program Magang</h2>
@@ -88,12 +87,17 @@
                     {{-- @include('component.alert') --}}
                     <div class="alert alert-warning">
                         <div class="text-muted">
-                            <p><strong>Peringatan!</strong> Diharapkan untuk mengisi form terlebih dahulu yang sudah disediakan sebelum mendaftarkan program magang. Anda bisa click link <a href="{{route('biodata.index')}}">disini</a> untuk melengkapi data</p>
+                            <p><strong>Peringatan!</strong> Diharapkan untuk mengisi form terlebih dahulu yang sudah
+                                disediakan sebelum mendaftarkan program magang. Anda bisa click link <a
+                                    href="{{ route('biodata.index') }}">disini</a> untuk melengkapi data</p>
                         </div>
                     </div>
                 </div>
                 <div class="row mt-3">
                     @foreach ($magang as $item)
+                        {{-- @php
+                            var_dump($item);
+                        @endphp --}}
                         <div class="col-4">
                             <div class="card shadow">
                                 <img src="{{ asset('image/magang.jpeg') }}" class="card-img-top" alt="...">
@@ -106,6 +110,7 @@
                                             -
                                             {{ \Carbon\Carbon::parse($item->rentang_waktu_selesai)->format('d F Y') }}</span>
                                     </p>
+
 
                                     <button class="btn btn-info btn-sm rounded-0" data-bs-toggle="modal"
                                         data-bs-target="#ProgramModal{{ $item->id }}">

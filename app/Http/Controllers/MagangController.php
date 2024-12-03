@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class MagangController extends Controller
 {
-    protected $crud, $user;
+    protected $crud;
     use AuthorizesRequests;
 
     public function __construct(CrudInterface $crudInterface)
@@ -27,10 +27,21 @@ class MagangController extends Controller
     public function index()
     {
         $this->authorize('viewAny', Magang::class);
-
+        if (auth()->user()->level == 'admin') {
+            $data = $this->crud->find('name', auth()->user()->name, ['user']);
+        } elseif (auth()->user()->level == 'opd') {
+            $data = $this->crud->find('user_id', auth()->user()->id, ['user']);
+        } else {
+            $data = Magang::with(['user_magang'])
+                ->whereDoesntHave('user_magang', function ($query) {
+                    $query->where('user_id', auth()->user()->id);
+                })->get();
+            // dd($data);
+            // dd($data);
+        }
         return view('auth.magang.index', [
             'title' => 'magang',
-            'magang' => $this->crud->all(['user']),
+            'magang' => $data,
             'opd' => User::where('level', 'opd')->get()
         ]);
     }

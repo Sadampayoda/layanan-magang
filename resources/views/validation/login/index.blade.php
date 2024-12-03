@@ -40,7 +40,8 @@
 
                             <p class="text-center mt-3 border-top p-3">
                                 Belum punya akun?
-                                <a href="{{ route('register') }}" class="text-decoration-none">Silahkan Register</a>
+                                <a href="{{ route('register') }}" class="text-decoration-none">Silahkan Register</a> <br>
+                                <a href="{{route('forget-password')}}">Lupa password ?</a>
                             </p>
                         </form>
                     </div>

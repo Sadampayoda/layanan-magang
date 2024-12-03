@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MagangController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserMagangController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +19,10 @@ Route::middleware('guest')->group( function () {
         Route::get('/register','RegisterPage')->name('register');
         Route::post('/login','loginAuthentication')->name('login.authentication');
         Route::post('/register','registerAuthentication')->name('register.authentication');
+        Route::get('/forget-password','forget_password')->name('forget-password');
+        Route::post('/forget-password','forget_password_validation')->name('forget-password.validate');
+        Route::get('/forget-password/{token}','forget_password_reset')->name('forget-password.reset');
+        Route::post('/forget-password/create','update_password')->name('forget-password.update');
     });
 });
 
@@ -25,17 +30,22 @@ Route::middleware('guest')->group( function () {
 Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/','index')->name('dashboard');
+        Route::get('/faq','faq')->name('faq');
+        Route::get('/tentang','tentang')->name('tentang');
         Route::put('/magang/{id}/status','updateStatus')->name('magang.status');
         Route::post('/logout','logout')->name('logout');
+        Route::post('/logout','logout')->name('logout');
+        Route::get('/password',  'password')->name('password');
+        Route::post('/change-password',  'changePassword')->name('change.password');
     });
     Route::resource('users',UserController::class)
     ->except(['create','show','edit']);
     Route::resource('magang',MagangController::class)
     ->except(['create','show','edit']);
     Route::resource('kegiatan',UserMagangController::class)
-    ->except(['create','show','edit']);
-    Route::resource('biodata',BiodataController::class)
-    ->except(['create','show','edit']);
+    ->except(['create']);
+    Route::resource('biodata',BiodataController::class)->except(['create','show','edit']);
+    Route::resource('notification',NotificationController::class);
 
 
 });

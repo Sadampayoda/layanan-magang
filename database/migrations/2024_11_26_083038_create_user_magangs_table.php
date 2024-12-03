@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('magang_id');
+            $table->enum('status', ['Pending', 'Approved', 'Rejected'])->default('Pending');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('magang_id')->references('id')->on('magangs')->onDelete('cascade');
             $table->timestamps();

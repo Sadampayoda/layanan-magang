@@ -13,4 +13,9 @@ class Magang extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+
+    public function user_magang()
+    {
+        return $this->hasMany(UserMagang::class);
+    }
 }

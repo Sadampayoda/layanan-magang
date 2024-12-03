@@ -51,7 +51,7 @@ class MagangPolicy
      */
     public function delete(User $user, Magang $magang)
     {
-        return $user->level == 'admin' && $user->name == $magang->name
+        return $user->level == 'admin'& $user->name == $magang->name
             ? Response::allow()
             : abort(404);
     }

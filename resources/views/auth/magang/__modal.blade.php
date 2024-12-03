@@ -125,10 +125,10 @@
         aria-labelledby="ProgramModalLabel{{ $item->id }}" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{ route('magang.update', $item->id) }}" method="POST">
+                <form action="{{ route('kegiatan.store') }}" method="POST">
                     @csrf
-                    @method('PUT')
                     <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="magang_id" value="{{$item->id}}">
                     <div class="modal-header">
                         <h5 class="modal-title" id="ProgramModalLabel{{ $item->id }}">Program {{$item->jenis_magang}}</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"

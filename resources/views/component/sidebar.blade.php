@@ -54,7 +54,8 @@
                 <a class="sidebar-link {{ $title == 'magang' ? 'active' : '' }} text-decoration-none"
                     href="{{ route('magang.index') }}">
                     <i class="bi bi-clipboard-check fs-4"></i>
-                    <h3 class="fs-4 mt-1">{{(auth()->user()->level !== 'mahasiswa' ? 'Pengajuan Magang' : 'Program Magang')}} </h3>
+                    <h3 class="fs-4 mt-1">
+                        {{ auth()->user()->level !== 'mahasiswa' ? 'Pengajuan Magang' : 'Program Magang' }} </h3>
                 </a>
             </li>
 
@@ -62,7 +63,7 @@
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ $title == 'user' ? 'active' : '' }} text-decoration-none"
                         href="{{ route('users.index') }}">
-                        <i class="bi bi-bell fs-4"></i>
+                        <i class="bi bi-person fs-4"></i>
                         <h3 class="fs-4 mt-1">User Manajement</h3>
                     </a>
                 </li>
@@ -70,14 +71,16 @@
             @if (auth()->user()->level !== 'admin')
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ $title == 'kegiatan' ? 'active' : '' }} text-decoration-none"
-                        href="">
+                        href="{{route('kegiatan.index')}}">
                         <i class="bi bi-calendar-check fs-4"></i>
                         <h3 class="fs-4 mt-1">Kegiatan</h3>
                     </a>
                 </li>
+            @endif
+            @if (auth()->user()->level == 'mahasiswa' || auth()->user()->level == 'admin')
                 <li class="sidebar-item">
-                    <a class="sidebar-link {{ $title == 'notifikasi' ? 'active' : '' }} text-decoration-none"
-                        href="">
+                    <a class="sidebar-link {{ $title == 'notif' ? 'active' : '' }} text-decoration-none"
+                        href="{{route('notification.index')}}">
                         <i class="bi bi-bell fs-4"></i>
                         <h3 class="fs-4 mt-1">Notifikasi</h3>
                     </a>
@@ -86,8 +89,8 @@
             @if (auth()->user()->level == 'mahasiswa')
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ $title == 'form' ? 'active' : '' }} text-decoration-none"
-                        href="{{route('biodata.index')}}">
-                        <i class="bi bi-bell fs-4"></i>
+                        href="{{ route('biodata.index') }}">
+                        <i class="bi bi-gear"></i>
                         <h3 class="fs-4 mt-1">Form data</h3>
                     </a>
                 </li>
@@ -100,13 +103,13 @@
                 <h3 class="text-muted fs-4">Other</h3>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ $title == 'faq' ? 'active' : '' }} text-decoration-none" href="">
+                <a class="sidebar-link {{ $title == 'faq' ? 'active' : '' }} text-decoration-none" href="{{route('faq')}}">
                     <i class="bi bi-question-circle fs-4"></i>
                     <h3 class="fs-4 mt-1">FAQ</h3>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a class="sidebar-link {{ $title == 'about' ? 'active' : '' }} text-decoration-none" href="">
+                <a class="sidebar-link {{ $title == 'about' ? 'active' : '' }} text-decoration-none" href="{{route('tentang')}}">
                     <i class="bi bi-info-circle fs-4"></i>
                     <h3 class="fs-4 mt-1">Tentang Kami</h3>
                 </a>

@@ -51,4 +51,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Magang::class);
     }
+    public function user_magang()
+    {
+        return $this->hasMany(UserMagang::class);
+    }
+
+    public function biodata()
+    {
+        return $this->hasOne(Biodata::class);
+    }
+
 }

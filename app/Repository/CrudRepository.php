@@ -19,22 +19,22 @@ class CrudRepository implements CrudInterface
         }
         $this->model = new $model;
     }
-    public function all(array $relational = [])
+    public function all(array $relational = [], $orderBy = 'ASC',$coloms = 'id')
     {
-        return ($relational) ? $this->model->with($relational)->get()
-        : $this->model->all();
+        return ($relational) ? $this->model->with($relational)->orderBy($coloms,$orderBy)->get()
+        : $this->model->orderBy($coloms,$orderBy)->get();
     }
 
-    public function find(array $find, array $relational = [])
+    public function find( $key, $value, array $relational = [],$orderBy='ASC',  $coloms= 'id')
     {
-        return ($relational) ? $this->model->with($relational)->where($find)->get()
-        : $this->model->where($find)->get();
+        return ($relational) ? $this->model->with($relational)->where($key,$value)->orderBy($coloms,$orderBy)->get()
+        : $this->model->where($key,$value)->orderBy($coloms,$orderBy)->get();
     }
 
-    public function findId($id, array $relational = [])
+    public function findId($id, array $relational = [],$orderBy='ASC', $coloms= 'id')
     {
-        return ($relational) ? $this->model->with($relational)->find($id)
-        : $this->model->find($id);
+        return ($relational) ? $this->model->with($relational)->orderBy($coloms,$orderBy)->find($id)
+        : $this->model->orderBy($coloms,$orderBy)->find($id);
     }
 
     public function create($data)
