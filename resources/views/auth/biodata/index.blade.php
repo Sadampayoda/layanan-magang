@@ -37,7 +37,7 @@
                         @if ($biodata)
                             @method('PUT')
                         @endif
-
+                        {{-- @dd($biodata) --}}
                         <input type="hidden" name="user_id" value="{{ auth()->user()->id }}">
 
                         <!-- Step 1 -->

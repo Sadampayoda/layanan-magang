@@ -19,6 +19,40 @@
                     </div>
                 </div>
             </div>
+            @if (auth()->user()->level != 'mahasiswa')
+                <div class="row mt-3">
+                    <div class="col">
+                        <h4 class="mb-4">Tabel pengguna mahasiswa terdaftar</h4>
+                        <table class="table table-bordered ">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nama</th>
+                                    <th>Email</th>
+                                    <th>berkas</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{-- @dd($data) --}}
+                                @foreach ($data as $item)
+                                    {{-- @dd($item) --}}
+                                    <tr class="bg-success-subtle">
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $item->name }}</td>
+                                        <td>{{ $item->email }}</td>
+                                        <td>
+                                            <a class="btn btn-success btn-sm rounded-0"
+                                                href="{{ route('data-form', $item->id) }}">
+                                                Form data
+                                            </a>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 
@@ -41,7 +75,7 @@
                         }
                     },
                     xAxis: {
-                        categories: Object.keys(data.pkl), // Menampilkan tahun dari data yang sudah disortir
+                        categories: Object.keys(data.pkl),
                         title: {
                             text: 'Year'
                         }

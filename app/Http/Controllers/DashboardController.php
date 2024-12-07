@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\MagangEvent;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\MagangUpdateStatusRequest;
-use App\Models\{Magang};
+use App\Models\{Magang, User};
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,7 +17,16 @@ class DashboardController extends Controller
     public function index()
     {
         return view('auth.index', [
-            'title' => 'dashboard'
+            'title' => 'dashboard',
+            'data' => User::where('level','mahasiswa')->paginate(5),
+        ]);
+    }
+
+    public function data_form(int $id)
+    {
+        return view('auth.show',[
+            'title' => 'dashboard',
+            'data' => User::with(['biodata'])->find($id),
         ]);
     }
 

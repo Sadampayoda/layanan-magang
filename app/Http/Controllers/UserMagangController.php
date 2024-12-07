@@ -32,7 +32,7 @@ class UserMagangController extends Controller
 
         $data = (auth()->user()->level == 'mahasiswa')
         ?  $this->crud->find('user_id',auth()->user()->id,['user','magang'])
-        : Magang::all();
+        : Magang::where('user_id',auth()->user()->id)->where('status_pengajuan','Approved')->get();
 
 
 

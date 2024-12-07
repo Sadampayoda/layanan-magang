@@ -30,6 +30,7 @@ Route::middleware('guest')->group( function () {
 Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/','index')->name('dashboard');
+        Route::get('/data-form/{id}','data_form')->name('data-form');
         Route::get('/faq','faq')->name('faq');
         Route::get('/tentang','tentang')->name('tentang');
         Route::put('/magang/{id}/status','updateStatus')->name('magang.status');

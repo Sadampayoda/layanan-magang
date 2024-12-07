@@ -22,9 +22,10 @@ class BiodataController extends Controller
      */
     public function index()
     {
+
         return view('auth.biodata.index',[
             'title' => 'form',
-            'biodata' => $this->crud->findId(auth()->user()->id),
+            'biodata' => $this->crud->find('user_id', auth()->user()->id)[0] ,
         ]);
     }
 
@@ -41,6 +42,7 @@ class BiodataController extends Controller
      */
     public function store(BiodataCreateRequest $biodataCreateRequest)
     {
+
         $this->crud->create($biodataCreateRequest->validated());
         return back()->with('success', 'Data berhasil ditambahkan');
     }
