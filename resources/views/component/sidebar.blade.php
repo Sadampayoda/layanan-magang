@@ -61,6 +61,22 @@
 
             @if (auth()->user()->level == 'admin')
                 <li class="sidebar-item">
+                    <a class="sidebar-link {{ $title == 'opd' ? 'active' : '' }} text-decoration-none"
+                        href="{{ route('opd.index') }}">
+                        <i class="bi bi-person fs-4"></i>
+                        <h3 class="fs-4 mt-1">Data OPD</h3>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
+                    <a class="sidebar-link {{ $title == 'sekolah' ? 'active' : '' }} text-decoration-none"
+                        href="{{ route('sekolah.index') }}">
+                        <i class="bi bi-book fs-4"></i>
+                        <h3 class="fs-4 mt-1">Data Sekolah</h3>
+                    </a>
+                </li>
+
+                <li class="sidebar-item">
                     <a class="sidebar-link {{ $title == 'user' ? 'active' : '' }} text-decoration-none"
                         href="{{ route('users.index') }}">
                         <i class="bi bi-person fs-4"></i>
@@ -77,7 +93,7 @@
                     </a>
                 </li>
             @endif
-            @if (auth()->user()->level == 'mahasiswa' || auth()->user()->level == 'admin')
+            @if (auth()->user()->level == 'mahasiswa' || auth()->user()->level == 'opd')
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ $title == 'notif' ? 'active' : '' }} text-decoration-none"
                         href="{{route('notification.index')}}">

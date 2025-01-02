@@ -21,57 +21,48 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nama Pengaju</th>
+                            <th>Judul</th>
                             <th>OPD Tujuan</th>
                             <th>Jenis Magang</th>
                             <th>Rentang Waktu</th>
-                            <th>Status</th>
-
-                            <th>Aksi</th>
+                            <th>Deskripsi</th>
+                            @if (auth()->user()->level == 'admin')
+                                <th>Aksi</th>
+                            @endif
+                            <th>Syarat</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($magang as $index => $item)
-                            @if ($item->status_pengajuan == 'Pending')
-                                <tr class="table-warning">
-                                @elseif ($item->status_pengajuan == 'Approved')
-                                <tr class="table-success">
-                                @else
-                                <tr class="table-danger">
-                            @endif
-
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->user->name }}</td>
-                            <td>{{ $item->jenis_magang }}</td>
-                            <td>{{ $item->rentang_waktu_mulai }} - {{ $item->rentang_waktu_selesai }}</td>
-                            <td>
-                                {{ $item->status_pengajuan }}
-                            </td>
-                            <td>
+                            <tr class="table-success">
+                                <td>{{ $index + 1 }}</td>
+                                <td>{{ $item->title }}</td>
+                                <td>{{ $item->user->name }}</td>
+                                <td>{{ $item->jenis_magang }}</td>
+                                <td>{{ $item->rentang_waktu_mulai }} - {{ $item->rentang_waktu_selesai }}</td>
+                                <td>
+                                    <button type="button" class="btn btn-success rounded-0" data-bs-toggle="modal"
+                                        data-bs-target="#infoModal{{ $item->id }}">
+                                        Lihat Informasi
+                                    </button>
+                                </td>
                                 @if (auth()->user()->level == 'admin')
-                                    <button class="btn btn-warning btn-sm rounded-0" data-bs-toggle="modal"
-                                        data-bs-target="#editModal{{ $item->id }}">
-                                        Edit
-                                    </button>
-
-                                    <button class="btn btn-danger btn-sm rounded-0" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal{{ $item->id }}">
-                                        Hapus
-                                    </button>
-                                @else
-                                    @if ($item->status_pengajuan == 'Pending')
-                                        <button class="btn btn-success btn-sm rounded-0" data-bs-toggle="modal"
-                                            data-bs-target="#StatusModal{{ $item->id }}">
-                                            Verifikasi
+                                    <td>
+                                        <button class="btn btn-warning btn-sm rounded-0" data-bs-toggle="modal"
+                                            data-bs-target="#editModal{{ $item->id }}">
+                                            Edit
                                         </button>
-                                    @elseif ($item->status_pengajuan == 'Approved')
-                                        <span>Diterima</span>
-                                    @else
-                                        <span>Ditolak</span>
-                                    @endif
+
+                                        <button class="btn btn-danger btn-sm rounded-0" data-bs-toggle="modal"
+                                            data-bs-target="#deleteModal{{ $item->id }}">
+                                            Hapus
+                                        </button>
+                                    </td>
                                 @endif
-                            </td>
+                                <td>
+                                    <a class="btn btn-primary rounded-0"
+                                        href="{{ route('magang.show', $item->id) }}">Syarat</a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -100,9 +91,9 @@
                         @endphp --}}
                         <div class="col-4">
                             <div class="card shadow">
-                                <img src="{{ asset('image/magang.jpeg') }}" class="card-img-top" alt="...">
+                                <img src="{{ asset('storage/'.$item->image) }}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">Program {{ $item->jenis_magang }}</h5>
+                                    <h5 class="card-title">Program {{ $item->title }}</h5>
                                     <p class="card-text">Pelaksanaan
                                         <br>
                                         <span
@@ -116,6 +107,9 @@
                                         data-bs-target="#ProgramModal{{ $item->id }}">
                                         Daftar sekarang
                                     </button>
+                                    <a href="{{route('magang.show',$item->id)}}" class="btn btn-warning btn-sm rounded-0">
+                                        Detail magang
+                                    </a>
                                 </div>
                             </div>
                         </div>

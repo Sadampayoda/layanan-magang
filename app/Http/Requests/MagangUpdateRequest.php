@@ -28,6 +28,9 @@ class MagangUpdateRequest extends FormRequest
             'description' => 'min:10',
             'rentang_waktu_mulai' => 'date|after_or_equal:today',
             'rentang_waktu_selesai' => 'date|after_or_equal:rentang_waktu_mulai',
+            'mulai_pendaftaran' => 'date|before_or_equal:rentang_waktu_mulai',
+            'tutup_pendaftaran' => 'date|before_or_equal:rentang_waktu_mulai|after_or_equal:mulai_pendaftaran',
+            'image' => 'file|mimes:png,jpg,jpeg'
         ];
     }
 }

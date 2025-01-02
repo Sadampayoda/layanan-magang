@@ -15,7 +15,7 @@
                         <th>Email</th>
                         <th>Berkas</th>
                         <th>Status</th>
-                        <th>Aksi</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -37,9 +37,6 @@
                             <a class="btn btn-success btn-sm rounded-0" href="{{ route('kegiatan.show', $item->user->id) }}">
                                 Form data
                             </a>
-                        </td>
-                        <td>
-                            {{ $item->status }}
                         </td>
                         <td>
 

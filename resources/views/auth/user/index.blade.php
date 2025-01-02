@@ -27,6 +27,9 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->level }}</td>
                         <td>
+                            <button type="button" class="btn btn-success rounded-0 btn-sm" data-bs-toggle="modal" data-bs-target="#resetPasswordModal{{$user->id}}">
+                                Reset Password
+                            </button>
                             <button class="btn btn-warning btn-sm rounded-0" data-bs-toggle="modal"
                                 data-bs-target="#editModal{{ $user->id }}">Edit</button>
                             <button class="btn btn-danger btn-sm rounded-0" data-bs-toggle="modal"
@@ -40,9 +43,6 @@
                 @endforelse
             </tbody>
         </table>
-
-
-
     </div>
 </div>
 

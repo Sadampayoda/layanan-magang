@@ -26,11 +26,10 @@ class BiodataUpdateRequest extends FormRequest
             'tempat_lahir' => 'sometimes|string|max:255',
             'tanggal_lahir' => 'sometimes|date',
             'jenis_kelamin' => 'sometimes|in:L,P',
-            'nama_sekolah' => 'sometimes|string|max:255',
-            'alamat_sekolah' => 'sometimes|string|max:255',
-            'jurusan' => 'sometimes|string|max:255',
-            'jenis_magang' => 'sometimes|in:PKL,Prakerin,Magang',
-            'waktu_magang' => 'sometimes|string|max:255',
+            'sekolah_id' => 'sometimes',
+            'jurusan_id' => 'sometimes',
+            'image' => 'sometimes|file|mimes:png,jpg,jpeg',
+            'cv' => 'sometimes|file|mimes:pdf',
         ];
     }
 }

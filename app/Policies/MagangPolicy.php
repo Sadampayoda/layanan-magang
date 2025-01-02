@@ -26,6 +26,8 @@ class MagangPolicy
     }
 
 
+
+
     /**
      * Determine whether the user can create models.
      */
@@ -41,7 +43,7 @@ class MagangPolicy
      */
     public function update(User $user, Magang $magang)
     {
-        return $user->level == 'admin' && $user->name == $magang->name
+        return $user->level == 'admin'
             ? Response::allow()
             : abort(404);
     }
@@ -51,7 +53,7 @@ class MagangPolicy
      */
     public function delete(User $user, Magang $magang)
     {
-        return $user->level == 'admin'& $user->name == $magang->name
+        return $user->level == 'admin'
             ? Response::allow()
             : abort(404);
     }

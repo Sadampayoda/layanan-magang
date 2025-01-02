@@ -39,7 +39,7 @@ class CrudRepository implements CrudInterface
 
     public function create($data)
     {
-        $this->model->create($data);
+        return $this->model->create($data);
     }
 
     public function update($data, $id)

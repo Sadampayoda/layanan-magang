@@ -28,17 +28,12 @@ class NotificationListener
     public function handle(MagangEvent $event): void
     {
         $data = $event->getMagang();
-        $body = ($data->status_pengajuan == 'Rejected')
-        ? 'Mohon maaf, pengajuan Anda ditolak oleh OPD untuk project ini. Anda dapat mengajukan ulang dengan memperbaiki data yang diperlukan.'
-        : 'Pengajuan Anda telah berhasil diverifikasi oleh OPD. Project dapat segera dijalankan.';
-
-        $user = User::where('name',$data->name)->first();
         $this->crud->create([
-            'user_id' => $user->id,
+            'user_id' => $data->user_id,
+            'status' => 'Approved',
             'jenis' => $data->jenis_magang,
-            'status' => $data->status_pengajuan,
-            'title' => 'Status project '.$data->jenis_magang,
-            'body' => $body
+            'title' => 'project '.$data->title,
+            'body' => 'Program magang baru dengan judul '.$data->title.' berhasil ditambahkan ke daftar program'
         ]);
 
     }

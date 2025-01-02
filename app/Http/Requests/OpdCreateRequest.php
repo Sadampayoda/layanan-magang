@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class BiodataCreateRequest extends FormRequest
+class OpdCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,13 +23,9 @@ class BiodataCreateRequest extends FormRequest
     {
         return [
             'user_id' => 'required|exists:users,id',
-            'tempat_lahir' => 'required|string|max:255',
-            'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required|in:L,P',
-            'sekolah_id' => 'required',
-            'jurusan_id' => 'required',
-            'image' => 'required|file|mimes:png,jpg,jpeg',
-            'cv' => 'required|file|mimes:pdf',
+            'alamat' => 'required|string|max:255',
+            'deskripsi' => 'required|string|max:500',
+            'kontak' => 'required|string|max:50',
         ];
     }
 }

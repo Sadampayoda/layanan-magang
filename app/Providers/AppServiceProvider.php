@@ -6,6 +6,7 @@ use App\Models\Magang;
 use App\Policies\MagangPolicy;
 use App\Repository\CrudRepository;
 use App\Repository\Interface\CrudInterface;
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Gate;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Carbon::setLocale('id');
         Paginator::useBootstrap();
         Gate::policy(Magang::class,MagangPolicy::class);
     }

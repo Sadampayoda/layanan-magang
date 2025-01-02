@@ -61,4 +61,14 @@ class User extends Authenticatable
         return $this->hasOne(Biodata::class);
     }
 
+    public function opd()
+    {
+        return $this->hasOne(Opd::class);
+    }
+
+    public function syarat()
+    {
+        return $this->hasMany(Syarat::class);
+    }
+
 }

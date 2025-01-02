@@ -6,6 +6,7 @@ use App\Events\UserMagangEvent;
 use App\Http\Requests\UserMagangCreateRequest;
 use App\Http\Requests\UserMagangUpdateRequest;
 use App\Models\Magang;
+use App\Models\User;
 use App\Models\UserMagang;
 use App\Repository\Interface\CrudInterface;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -30,9 +31,23 @@ class UserMagangController extends Controller
     {
         $this->authorize('view',UserMagang::class);
 
-        $data = (auth()->user()->level == 'mahasiswa')
-        ?  $this->crud->find('user_id',auth()->user()->id,['user','magang'])
-        : Magang::where('user_id',auth()->user()->id)->where('status_pengajuan','Approved')->get();
+        if(auth()->user()->level == 'mahasiswa')
+        {
+            $data = UserMagang::with(['user','magang'])->where('user_id',auth()->user()->id)->get();
+            // dd($data);
+            $cek = UserMagang::where('user_id',auth()->user()->id)->where('ambil','Approved')->first();
+            if(!empty($cek))
+            {
+                
+                $data = UserMagang::with(['user','magang'])->where('user_id',auth()->user()->id)
+                ->where('ambil','Approved')->get();
+            }
+        }else{
+            $data = Magang::where('user_id',auth()->user()->id)->get();
+        }
+        // dd($cek);
+
+        // dd($data);
 
 
 
@@ -69,7 +84,7 @@ class UserMagangController extends Controller
     {
         return view('auth.kegiatan.show',[
             'title' => 'kegiatan',
-            'data' => $this->crud->find('user_id',$id,['user.biodata'])[0],
+            'data' => User::with(['biodata.sekolah'])->find($id),
         ]);
     }
 

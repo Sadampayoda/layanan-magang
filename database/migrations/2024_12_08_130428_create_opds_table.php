@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('magangs', function (Blueprint $table) {
+        Schema::create('opds', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('image');
             $table->unsignedBigInteger('user_id');
-            $table->enum('jenis_magang', ['Magang', 'PKL', 'Prakerin']);
-            $table->text('description');
-            $table->date('rentang_waktu_mulai');
-            $table->date('rentang_waktu_selesai');
-            $table->date('mulai_pendaftaran');
-            $table->date('tutup_pendaftaran');
-            $table->timestamps();
+            $table->text('alamat')->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->string('kontak')->nullable();
+            $table->string('logo')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -32,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('magangs');
+        Schema::dropIfExists('opds');
     }
 };

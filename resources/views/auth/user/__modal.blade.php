@@ -69,6 +69,38 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="resetPasswordModal{{$user->id}}" tabindex="-1" aria-labelledby="resetPasswordModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetPasswordModalLabel">Reset Password</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('reset.password') }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{$user->id}}">
+                        <div class="mb-3">
+                            <label for="new-password" class="form-label">Password Baru</label>
+                            <input type="password" class="form-control" id="new-password" name="new_password"
+                                placeholder="Masukkan password baru" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="confirm-password" class="form-label">Konfirmasi Password Baru</label>
+                            <input type="password" class="form-control" id="confirm-password"
+                                name="confirm_password" placeholder="Konfirmasi password baru" required>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary rounded-0">Reset Password</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 @endforeach
 
 <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">

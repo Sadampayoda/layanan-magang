@@ -3,8 +3,12 @@
 use App\Http\Controllers\AuthenticationController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JurusanController;
 use App\Http\Controllers\MagangController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\OpdController;
+use App\Http\Controllers\SekolahController;
+use App\Http\Controllers\SyaratController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserMagangController;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +34,7 @@ Route::middleware('guest')->group( function () {
 Route::middleware('auth')->group(function(){
     Route::controller(DashboardController::class)->group(function(){
         Route::get('/','index')->name('dashboard');
+        Route::post('/ambil/{id}','pilih')->name('ambil');
         Route::get('/data-form/{id}','data_form')->name('data-form');
         Route::get('/faq','faq')->name('faq');
         Route::get('/tentang','tentang')->name('tentang');
@@ -38,15 +43,18 @@ Route::middleware('auth')->group(function(){
         Route::post('/logout','logout')->name('logout');
         Route::get('/password',  'password')->name('password');
         Route::post('/change-password',  'changePassword')->name('change.password');
+        Route::post('/password-change',  'resetPassword')->name('reset.password');
     });
     Route::resource('users',UserController::class)
     ->except(['create','show','edit']);
     Route::resource('magang',MagangController::class)
-    ->except(['create','show','edit']);
+    ->except(['create','edit']);
     Route::resource('kegiatan',UserMagangController::class)
     ->except(['create']);
     Route::resource('biodata',BiodataController::class)->except(['create','show','edit']);
     Route::resource('notification',NotificationController::class);
-
-
+    Route::resource('opd',OpdController::class);
+    Route::resource('syarat',SyaratController::class);
+    Route::resource('sekolah',SekolahController::class);
+    Route::resource('jurusan',JurusanController::class);
 });

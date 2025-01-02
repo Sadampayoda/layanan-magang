@@ -15,14 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('sekolah_id');
+            $table->foreign('sekolah_id')->references('id')->on('sekolahs')->onDelete('cascade');
+            $table->unsignedBigInteger('jurusan_id');
+            $table->foreign('jurusan_id')->references('id')->on('jurusans')->onDelete('cascade');
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->enum('jenis_kelamin', ['L', 'P']);
-            $table->string('nama_sekolah');
-            $table->text('alamat_sekolah');
-            $table->string('jurusan');
-            $table->enum('jenis_magang', ['PKL', 'Prakerin','Magang']);
-            $table->string('waktu_magang');
+            $table->string('image');
+            $table->string('cv');
             $table->timestamps();
         });
     }

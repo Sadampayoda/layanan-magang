@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Events\MagangEvent;
 use App\Http\Requests\ChangePasswordRequest;
 use App\Http\Requests\MagangUpdateStatusRequest;
-use App\Models\{Magang, User};
+use App\Models\{Magang, User, UserMagang};
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,7 @@ class DashboardController extends Controller
     {
         return view('auth.show',[
             'title' => 'dashboard',
-            'data' => User::with(['biodata'])->find($id),
+            'data' => User::with(['biodata.sekolah'])->find($id),
         ]);
     }
 
@@ -62,6 +62,19 @@ class DashboardController extends Controller
         return redirect()->route('password')->with('success', 'Password berhasil diubah!');
     }
 
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'new_password' => 'required|min:6',
+            'confirm_password' => 'required|same:new_password',
+        ]);
+        $user = User::where('id', $request->user_id)->first();
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+        return back()->with('success', 'Password berhasil direset!');
+    }
+
     public function faq()
     {
         return view('auth.faq',['title' => 'faq']);
@@ -81,5 +94,12 @@ class DashboardController extends Controller
 
 
         return redirect()->route('login')->with('message', 'Anda berhasil logout.');
+    }
+
+    public function pilih(int $id)
+    {
+        UserMagang::where('id',$id)
+        ->update(['ambil'=> 'Approved']);
+        return back()->with('success', 'Anda berhasil mengambil program.');
     }
 }

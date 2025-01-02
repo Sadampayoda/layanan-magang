@@ -22,12 +22,15 @@ class MagangCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
+            'title' => 'required|max:200',
             'user_id' => 'required|numeric',
             'jenis_magang' => 'required|in:Magang,PKL,Prakerin',
             'description' => 'required|min:10',
             'rentang_waktu_mulai' => 'required|date|after_or_equal:today',
             'rentang_waktu_selesai' => 'required|date|after_or_equal:rentang_waktu_mulai',
+            'mulai_pendaftaran' => 'required|date|before_or_equal:rentang_waktu_mulai',
+            'tutup_pendaftaran' => 'required|date|before_or_equal:rentang_waktu_mulai|after_or_equal:mulai_pendaftaran',
+            'image' => 'required|file|mimes:png,jpg,jpeg'
         ];
 
     }

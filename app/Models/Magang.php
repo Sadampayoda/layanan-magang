@@ -18,4 +18,9 @@ class Magang extends Model
     {
         return $this->hasMany(UserMagang::class);
     }
+
+    public function syarat()
+    {
+        return $this->hasMany(Syarat::class);
+    }
 }
